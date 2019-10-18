@@ -1,0 +1,52 @@
+mat-slider {
+    width: 370px;
+  }
+
+  input[type="file"]{
+    visibility: hidden; 
+}
+
+.image-preview{
+    height: 5rem;
+    margin: 1rem 0;
+}
+
+.image-preview img {
+   height: 100%;
+}
+  li{
+    margin-left:1rem; 
+  }
+  
+  ul{
+    text-align: center;
+  }
+  .example-header-image {
+ 
+    background-size: cover;
+  }
+
+.images{
+  margin:20px; 
+  }
+  
+  form{
+    padding-top:50px; 
+    position: relative;
+    left: 50px;
+}
+
+img {
+    border-radius: 50%;
+  }
+
+mat-card{
+    position: relative; 
+    margin-top:50px; 
+    margin-left: 200px;
+  
+}
+.buttonSub{
+  position:relative;
+   
+}

@@ -1,0 +1,43 @@
+import { Component, OnInit } from '@angular/core';
+import { centerService } from './center.service';
+import { profile } from 'src/app/profiles/profile.model';
+import { Subject, Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-home-center',
+  templateUrl: './home-center.component.html',
+  styleUrls: ['./home-center.component.css']
+})
+export class HomeCenterComponent implements OnInit {
+   
+  indexUser:number=0;
+  fullname:string
+  currentUser:profile
+  users:profile[]=[]
+  subUser:Subscription
+  constructor(private centerService:centerService) { }
+
+  ngOnInit() {
+   this.centerService.getAllUser();
+   this.centerService.getUsers().subscribe(res=>{
+    this.users=[...res]
+    this.currentUser=this.users[0];
+     this.fullname=this.currentUser.firstName +' '+this.currentUser.lastName 
+  })
+ 
+  }
+
+async next(){
+
+  if(this.indexUser<this.users.length-1){
+   this.indexUser=this.indexUser+1;
+   this.currentUser=this.users[this.indexUser]
+   this.fullname=this.currentUser.firstName+' '+this.currentUser.lastName
+  }
+}
+
+want(){
+  this.centerService.addFriend(this.users[this.indexUser])
+}
+
+}

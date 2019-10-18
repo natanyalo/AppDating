@@ -1,0 +1,21 @@
+<div style="margin-top:200px " class="container justify-content-center " *ngIf="currentUser">
+
+    <div class="row">
+        <div class="col-xs-12 align-items-center offset-4 "> 
+            <h3>{{fullname}}</h3> 
+         </div>
+    </div>
+         <div class="row">
+            <div  class="col-xs-12 align-items-center   offset-4  "> 
+               <div class="profileUser">
+                  <img [src]="currentUser.imagePath">
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-12  align-items-center  offset-4 ">
+                <button (click)="next()"   style="margin-right:100px " class="d-inline bg-warning" >next</button> 
+               <button (click)="want()"  class="d-inline bg-success" >want</button> 
+          </div>
+      </div>
+</div>
