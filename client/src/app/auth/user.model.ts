@@ -4,5 +4,4 @@ export interface user{
  password:string,
  lastname:string,
  firstname:string
-
 }

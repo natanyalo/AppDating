@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 //allow to access to file , and tha path is for 
 // rediraction to right path from "images" to "backend/images" 
-app.use("/images",express.static(path.join("backend/images")))
+app.use("/images",express.static(path.join("images")))
 
 
 app.use((req, res, next) => {

@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 const route:Routes=[
     {path:'', component:LoginComponent},
     //protected
-    //{path:'create', component:postCreate, canActivate:[authGaurd]},
     {path:'home', component:HomeComponent, canActivate:[authGaurd]},
     {path:'edit/:postId', component:postCreate, canActivate:[authGaurd]},
     {path:'profile', component:ProfilesComponent, canActivate:[authGaurd]},

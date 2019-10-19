@@ -2,9 +2,6 @@ const Post=require('../models/post')
 
 
 
-
-
-
 //next for to prevent situion that the code stack because it
 //is not send back response
 exports.getPosts=(req, res, next)=>{

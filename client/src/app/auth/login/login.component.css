@@ -9,7 +9,7 @@ mat-card{
 }
 
 
-mat-form-field{
-    
-    padding-top:10px;  
+button,mat-form-field{
+    width: 400px;
+    margin:10px;  
 }

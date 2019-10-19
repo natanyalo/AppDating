@@ -20,7 +20,7 @@
         <li *ngIf="isUserAuth" class="nav-item" >
              <button   class="nav-link" (click)="onLogOut()" mat-button >logOut</button>
          </li>
-         <li class="nav-item">
+         <li class="nav-item" *ngIf="isUserAuth" >
           <a mat-button    routerLink='/profile'  routerLinkeActive="mat-accent" class="nav-link" >profile</a>
          </li>   
     </ul>

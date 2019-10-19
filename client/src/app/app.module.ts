@@ -61,7 +61,7 @@ import { centerService } from './home/home-center/center.service';
   entryComponents:[ErrorComponent]
 })
 //entryComponents use for tell anular i give you
-//component that you cant see at but create it
+//a component that you cant see at but create it
 export class AppModule implements OnInit { 
 
   constructor(private userServerice:userService){}
