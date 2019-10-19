@@ -9,35 +9,34 @@ import { Subject, Subscription } from 'rxjs';
   styleUrls: ['./home-center.component.css']
 })
 export class HomeCenterComponent implements OnInit {
-   
-  indexUser:number=0;
-  fullname:string
-  currentUser:profile
-  users:profile[]=[]
-  subUser:Subscription
-  constructor(private centerService:centerService) { }
+
+  indexUser: number = 0;
+  fullName: string
+  currentUser: profile
+  users: profile[] = []
+  subUser: Subscription
+  constructor(private centerService: centerService) { }
 
   ngOnInit() {
-   this.centerService.getAllUser();
-   this.centerService.getUsers().subscribe(res=>{
-    this.users=[...res]
-    this.currentUser=this.users[0];
-     this.fullname=this.currentUser.firstName +' '+this.currentUser.lastName 
-  })
- 
+    this.centerService.getAllUser();
+    this.centerService.getUsers().subscribe(res => {
+      this.users = [...res]
+      this.currentUser = this.users[0];
+      this.fullName = this.currentUser.firstName + ' ' + this.currentUser.lastName
+    })
+
   }
 
-async next(){
-
-  if(this.indexUser<this.users.length-1){
-   this.indexUser=this.indexUser+1;
-   this.currentUser=this.users[this.indexUser]
-   this.fullname=this.currentUser.firstName+' '+this.currentUser.lastName
+  async next() {
+    if (this.indexUser < this.users.length - 1) {
+      this.indexUser = this.indexUser + 1;
+      this.currentUser = this.users[this.indexUser]
+      this.fullName = this.currentUser.firstName + ' ' + this.currentUser.lastName
+    }
   }
-}
 
-want(){
-  this.centerService.addFriend(this.users[this.indexUser])
-}
+  want() {
+    this.centerService.addFriend(this.users[this.indexUser])
+  }
 
 }

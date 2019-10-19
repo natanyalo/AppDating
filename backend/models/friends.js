@@ -1,13 +1,13 @@
-const mongoose= require("mongoose")
+import { Schema, model } from "mongoose"
 
-const friendSechma=mongoose.Schema({
+const friendSechma=Schema({
    match:{ type:[String]},
    want:[String] ,
- creator:{type:mongoose.Schema.Types.ObjectId,ref:"User",
+ creator:{type:Schema.Types.ObjectId,ref:"User",
     require:true}
    
 
 
 })
 
-module.exports= mongoose.model('friends',friendSechma)
+export default model('friends',friendSechma)

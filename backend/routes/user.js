@@ -1,12 +1,12 @@
-const express= require('express')
-const userControllers=require('../controllers/user')
+import { Router } from 'express'
+import { userSignUp, userLogin } from '../controllers/user'
 
- const router=express.Router()
+ const router=Router()
   
  // function call without () is mean ref to function
- router.post("/signup",userControllers.userSignUp)
+ router.post("/signup",userSignUp)
 
  
- router.post("/login",userControllers.userLogin)
+ router.post("/login",userLogin)
 
-module.exports=router;
+ export default router;

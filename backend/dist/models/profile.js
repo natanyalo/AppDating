@@ -1,8 +1,12 @@
-import { Schema, model } from "mongoose"
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+   value: true
+});
 
+var _mongoose = require("mongoose");
 
-const userSechma = Schema({
+var userSechma = (0, _mongoose.Schema)({
    phoneNumber: { type: Number, require: true },
    lastName: { type: String, require: true },
    firstName: { type: String, require: true },
@@ -15,9 +19,9 @@ const userSechma = Schema({
    city: { type: String, require: true },
    imagePath: { type: String, require: true },
    creator: {
-      type: Schema.Types.ObjectId, ref: "User",
+      type: _mongoose.Schema.Types.ObjectId, ref: "User",
       require: true
    }
-})
+});
 
-export default model('Profile', userSechma)
+exports.default = (0, _mongoose.model)('Profile', userSechma);

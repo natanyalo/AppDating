@@ -1,16 +1,16 @@
-const express= require('express')
-const multer= require('multer')
-const checkAuth= require("../middleware/check-auth")
-const middlewarFile=require('../middleware/file')
-const profileControllers=require('../controllers/profile')
+import { Router } from 'express'
+//const multer= require('multer')
+import checkAuth from "../middleware/check-auth"
+import middlewarFile from '../middleware/file'
+import { saveProfile, upDataProfile, getProfile } from '../controllers/profile'
 
- const router=express.Router()
+ const router=Router()
   
  // function call without () is mean ref to function
 
-router.post("",checkAuth,middlewarFile, profileControllers.saveProfile)
-router.put("",checkAuth,middlewarFile, profileControllers.upDataProfile)
-router.get("",checkAuth ,profileControllers.getProfile)
+router.post("",checkAuth,middlewarFile, saveProfile)
+router.put("",checkAuth,middlewarFile, upDataProfile)
+router.get("",checkAuth ,getProfile)
 
 
-module.exports=router;
+export default router;

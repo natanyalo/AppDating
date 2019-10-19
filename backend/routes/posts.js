@@ -1,21 +1,21 @@
-const express= require('express')
-const multer= require('multer')
-const checkAuth= require("../middleware/check-auth")
-const postControllers= require('../controllers/post')
-const middlewarFile=require('../middleware/file')
- const router=express.Router()
+import { Router } from 'express'
+import multer from 'multer'
+import checkAuth from "../middleware/check-auth"
+import { getPosts, createPost, upDataPost, deletePost } from '../controllers/post'
+import middlewarFile from '../middleware/file'
+ const router=Router()
 
 
 
 //next for to prevent situion that the code stack because it
 //is not send back response
-router.get("",postControllers.getPosts)
+router.get("",getPosts)
 
-router.post("",checkAuth, middlewarFile,postControllers.createPost)
+router.post("",checkAuth, middlewarFile,createPost)
 
-router.put("",postControllers.upDataPost)
+router.put("",upDataPost)
 
 
-router.delete("/:id",checkAuth, middlewarFile,postControllers.deletePost)
+router.delete("/:id",checkAuth, middlewarFile,deletePost)
 
-module.exports=router;
+export default router;

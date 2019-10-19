@@ -1,5 +1,5 @@
 
-const multer= require('multer')
+import multer, { diskStorage } from 'multer';
 
 
 
@@ -9,7 +9,7 @@ const multer= require('multer')
      'image/jpg':'jpg'
  }
 
-const storage= multer.diskStorage({
+const storage= diskStorage({
     destination:(req,file, cb)=>{
         const isValid=MIME_TYPE_MAP[file.mimetype];
         let error = new Error("Invalide mine type")
@@ -28,4 +28,4 @@ const storage= multer.diskStorage({
     }
 })
   
-module.exports=multer({storage:storage}).single('image')
+export default multer({storage:storage}).single('image')

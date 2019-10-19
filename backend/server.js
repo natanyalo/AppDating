@@ -1,7 +1,7 @@
-const app = require("./app");
-const debug = require("debug")("node-angular");
-const http = require("http");
-const  env =require('./env')
+import  app from "./app";
+const  debug = require("debug")("node-angular");
+import  http from "http";
+ import env from './env';
 
 
 

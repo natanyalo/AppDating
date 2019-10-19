@@ -1,14 +1,14 @@
-const mongoose= require("mongoose")
+import { Schema, model } from "mongoose"
 
-const postSechma=mongoose.Schema({
+const postSechma=Schema({
    title:{ type:String,require:true },
    content:String,
    imagePath:String,
-   creator:{type:mongoose.Schema.Types.ObjectId,ref:"User",
+   creator:{type:Schema.Types.ObjectId,ref:"User",
     require:true}
    
 
 
 })
 
-module.exports= mongoose.model('post',postSechma)
+export default model('post',postSechma)

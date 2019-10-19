@@ -1,13 +1,13 @@
-const Post=require('../models/post')
+import Post, { find, updateOne, deleteOne } from '../models/post';
 
 
 
 //next for to prevent situion that the code stack because it
 //is not send back response
-exports.getPosts=(req, res, next)=>{
+export function getPosts(req, res, next){
   const pageSize =+req.query.pageSize
   const pageCurrent =+ req.query.page;
-  const postQuery=Post.find();
+  const postQuery=find();
   if(pageCurrent && pageSize){
       postQuery.skip(pageSize*(pageCurrent-1))
       .limit(pageSize)
@@ -19,7 +19,7 @@ exports.getPosts=(req, res, next)=>{
   
 }
 
- exports.createPost=(req, res, next)=>{
+ export function  createPost(req, res, next){
 
    console.log(req.file.filename)
     const url =req.protocol +'://'+req.get("host")
@@ -36,7 +36,7 @@ exports.getPosts=(req, res, next)=>{
     res.status(400).json({messege:"create post is fail"})
    })
 }
-exports.upDataPost= (req, res, next)=>{
+export function upDataPost(req, res, next){
 
     console.log(req.body)
     let upPost= new Post({
@@ -46,7 +46,7 @@ exports.upDataPost= (req, res, next)=>{
         creator:req.body.creator
      })
 
-    Post.updateOne({_id:req.body.id, creator:req.userData.userId},upPost )
+    updateOne({_id:req.body.id, creator:req.userData.userId},upPost )
         .then(result=>{
             if(result.nModified>0)
             res.status(200).json({})
@@ -60,8 +60,8 @@ exports.upDataPost= (req, res, next)=>{
 
 
 
-exports.deletePost=(req, res, next)=>{
-    Post.deleteOne({ _id: req.params.id,creator:req.userData.userId })
+export function deletePost(req, res, next){
+    deleteOne({ _id: req.params.id,creator:req.userData.userId })
         .then(result=>{
             if(result.n>0)
             res.status(200).json({})

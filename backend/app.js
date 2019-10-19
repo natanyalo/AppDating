@@ -1,14 +1,14 @@
-const express= require('express')
-const cors = require('cors')
-const bodyParser=require("body-parser")
-const path =require('path')
+import express from 'express'
+import cors from 'cors'
+import { urlencoded, json } from "body-parser"
+import { join } from 'path'
 
-const mongoose= require("mongoose")
-const db =require("./models/config");
-const posts= require('./routes/posts');
-const users= require('./routes/user');
-const profile= require('./routes/profile')
-const homeCenter=require('./routes/homeCenter')
+import { connect } from "mongoose"
+import { url } from "./models/config"
+import posts from './routes/posts'
+import users from './routes/user'
+import profile from './routes/profile'
+import homeCenter from './routes/homeCenter'
 
 
 const app=express();
@@ -16,17 +16,17 @@ const app=express();
 
 
 
-mongoose.connect(db.url,{
+connect(url,{
     userNewUrlParser:true,
     userCreateIndex:true
 })
 
 
-app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json())
+app.use(urlencoded({extended:true}))
+app.use(json())
 //allow to access to file , and tha path is for 
 // rediraction to right path from "images" to "backend/images" 
-app.use("/images",express.static(path.join("images")))
+app.use("/images",express.static(join("images")))
 
 
 app.use((req, res, next) => {
@@ -47,4 +47,4 @@ app.use("/api/center",homeCenter)
 app.use("/api/user",users)
 app.use("/api/profile",profile)
 
-module.exports=app
+export default app

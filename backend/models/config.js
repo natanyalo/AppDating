@@ -1,3 +1,4 @@
 const url="mongodb://localhost:27017/Posts";
 
-module.exports.url=url;
+const _url = url;
+export { _url as url };
