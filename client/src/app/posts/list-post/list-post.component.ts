@@ -31,7 +31,6 @@ export class ListPostComponent implements OnInit,OnDestroy {
   }
   ngOnInit() {
     this.postService.getPosts(this.postsPerPage, 1);
-
     this.postsSub= this.postService.getPostsUpdateListener()
     .subscribe((posts:post[]) =>{
      this.posts=posts;
@@ -41,9 +40,7 @@ export class ListPostComponent implements OnInit,OnDestroy {
     this.userAuthenected= this.useService.getAuthListener().subscribe(isAuth=>{
       this.userId=this.useService.getUserId()
       this.isUserAuth=isAuth
-      
-      
-    console.log(" this.userId", this.userId)
+
      })
   }
   

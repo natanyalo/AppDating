@@ -26,7 +26,6 @@ public getPosts( postPerPages:number,currentPage:number ){
       this.http.get<{messege:string,post:any }>(this.port+"post"+paramsQuery)
       .pipe( map (( postdata )=>{
           return postdata.post.map( d =>{
-            console.log("this.creator server",d.creator)
               return{
                     title:d.title,
                     content:d.content,
@@ -50,8 +49,7 @@ public getPosts( postPerPages:number,currentPage:number ){
     .subscribe((resdata:post)=>{
         let index= this.storePost.findIndex(t=>
             t.id==post.id)
-            this.storePost[index]=post;
-       
+            this.storePost[index]=post;  
         this.postsUpdate.next([...this.storePost])
         this.router.navigate(['/'])
     })

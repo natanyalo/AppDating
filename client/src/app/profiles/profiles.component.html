@@ -1,180 +1,138 @@
-
 <div class="container">
-    <div class="row">
-     <div class="col-12">
-        <mat-card *ngIf="!status">
-         <form  (submit)="saveProfile()" [formGroup]="form" >
-             <h4>Personal Information</h4>
-            
-                  <button mat-stroked-button (click)="filePickerr.click()"  type="button"> pickUp image</button>
-                  <input type="file" #filePickerr  name="imagePath" (change)="onImagePicked($event)" >
-              
-                 <div class="image-preview" *ngIf="imagePreview !=='' && imagePreview ">
-                     <img [src]="imagePreview"  > 
-                  </div>
-                <div> 
-                   <mat-form-field style="padding-right: 10px">
-                          <input type="text"  matInput
-                          name="firstName" 
-                          formControlName="firstName"
-                           placeholder="first name" >
-                         </mat-form-field>
+   <div class="row">
+      <div class="col-12">
+         <mat-card *ngIf="!status">
+            <form (submit)="saveProfile()" [formGroup]="form">
+               <h4>Personal Information</h4>
+               <button mat-stroked-button (click)="filePickerr.click()" type="button"> pickUp image</button>
+               <input type="file" #filePickerr name="imagePath" (change)="onImagePicked($event)">
+               <div class="image-preview" *ngIf="imagePreview !=='' && imagePreview ">
+                  <img [src]="imagePreview">
+               </div>
+               <div>
+                  <mat-form-field style="padding-right: 10px">
+                     <input type="text" matInput name="firstName" formControlName="firstName" placeholder="first name">
+                  </mat-form-field>
 
-                         <mat-form-field>
-                         <input matInput  type="text"
-                           placeholder="last name" 
-                           formControlName="lastName"
-                            name="lastName"   >
-                       </mat-form-field>
-             </div>
-             <div>
-                 <mat-form-field style="padding-right: 10px">
+                  <mat-form-field>
+                     <input matInput type="text" placeholder="last name" formControlName="lastName" name="lastName">
+                  </mat-form-field>
+               </div>
+               <div>
+                  <mat-form-field style="padding-right: 10px">
                      <mat-label>age</mat-label>
-                      <select    formControlName="age" 
-                          matNativeControl name="age" >
-                          <option 
-                          *ngFor="let age of agies " 
-                          [value]="age" >{{age}}
-                          </option>
-                      </select>
-                </mat-form-field>
+                     <select formControlName="age" matNativeControl name="age">
+                        <option *ngFor="let age of agies " [value]="age">{{age}}
+                        </option>
+                     </select>
+                  </mat-form-field>
 
-                <mat-form-field>
-                      <input matInput  type="text"
-                           placeholder=" phone  number"
-                           formControlName="phoneNumber"
-                             name="phoneNumber"   >
-                </mat-form-field>
-
-             </div >
-             <div>
-                 <mat-form-field style="padding-right: 10px">
-                            <mat-label>city</mat-label>
-                            <select matNativeControl name="city" 
-                                formControlName="city">
-                                 <option [value]="city"
-                                 *ngFor="let city of cities ">{{city}}
-                                 </option>
-                             </select>
-                 </mat-form-field>
-             </div>
-             <h4>looking for contact with...</h4>
-             <div>
-                    <mat-form-field style="padding-right: 10px">
+                  <mat-form-field>
+                     <input matInput type="text" placeholder=" phone  number" formControlName="phoneNumber"
+                        name="phoneNumber">
+                  </mat-form-field>
+               </div>
+               <div>
+                  <mat-form-field style="padding-right: 10px">
+                     <mat-label>city</mat-label>
+                     <select matNativeControl name="city" formControlName="city">
+                        <option [value]="city" *ngFor="let city of cities ">{{city}}
+                        </option>
+                     </select>
+                  </mat-form-field>
+               </div>
+               <h4>looking for contact with...</h4>
+               <div>
+                  <mat-form-field style="padding-right: 10px">
                      <mat-label>favorite</mat-label>
-                      <select matNativeControl name="favorite" 
-                         formControlName="favorite">
-                         <option value="male">male</option>
-                         <option value="female">female</option>
-                      </select>
-                    </mat-form-field>
-                  </div >
-             <div>
-                 <mat-form-field style="padding-right: 10px">
-                            <mat-label>maximum age</mat-label>
-                             <select matNativeControl 
-                                  name="maximum"    
-                                  formControlName="maximum">
-                                  <option *ngFor="let age of agies"
-                                     [value]="age">{{age}}</option>
-                             </select>
-                </mat-form-field>
-
-                <mat-form-field >
-                        <mat-label> minimum age</mat-label>
-                         <select matNativeControl name="minimum"  
-                                formControlName="minimum">
-                                <option [value]="age"
-                                 *ngFor="let age of agies" >
-                                   {{age}}</option>
-                         </select>
-            </mat-form-field>
-         </div> 
-         <div>
-            <p>range of residense:</p>
-             <mat-slider
-                name="range"
-                thumbLabel
-                [displayWith]="formatLabel"
-                tickInterval="10"
-                min="1"
-                max="100"
-                formControlName="range"
-                ></mat-slider>  
-        </div>
-        <div>
-            <mat-form-field>
-               <textarea matInput rows="4" 
-                  placeholder="summery"  name="summery" 
-                    formControlName="summery" ></textarea>
-            </mat-form-field>
-       </div>
-       <div class="buttonSub">
-       
-           <button 
-             type="submit"
-              mat-raised-button
-              color="primary"> 
-             
-              {{typeButton}}
-           </button>
-         </div> 
-      </form>
-   </mat-card>
-  
-<!-- -------------------------------------------------->
-
-<mat-card *ngIf="status"> 
-         <mat-card-header>
-              
-            <div (click)="filePicker.click()" [ngStyle]="{'background-image': 'url('+ getImage()+')'}"  mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{profile.firstName }}{{profile.lastName}}</mat-card-title>
-            <mat-card-subtitle>{{profile.city}}</mat-card-subtitle>
-           
-                  <input type="file" #filePicker
-                   (change)="EditeImagePicked($event)" >
-                 
-          </mat-card-header>
-          <mat-card-content>
-            <ul class="list-group list-group-flush">
-            <li class="list-group-item  d-flex justify-content-between align-items-center">
-                Phone Number 
-                <span class="badge badge-success">
-                   {{profile.phoneNumber}}
-                </span>            
-            </li>
-            <li class="list-group-item  d-flex justify-content-between align-items-center">
-                  Age 
-                  <span class="badge badge-success">
-                     {{profile.age}}
-                  </span>            
-              </li>
-              <li class="list-group-item  d-flex justify-content-between align-items-center">
-                 Favorite 
-                  <span class="badge badge-success">
-                     {{profile.favorite}}
-                  </span>            
-              </li>
-              <li class="list-group-item  d-flex justify-content-between align-items-center">
-                  city 
-                  <span class="badge badge-success">
-                     {{profile.city}}
-                  </span>            
-              </li>
-              <li class="list-group-item  d-flex justify-content-between align-items-center">
-                  minimum 
-                  <span class="badge badge-success">
-                     {{profile.minimum}}
-                  </span>            
-              </li>
-              <li class="list-group-item  d-flex justify-content-between align-items-center">
-                  maximum 
-                  <span class="badge badge-success">
-                     {{profile.maximum}}
-                  </span>            
-              </li>
-            </ul> 
-           <!--   <ul class="list-inline">
+                     <select matNativeControl name="favorite" formControlName="favorite">
+                        <option value="male">male</option>
+                        <option value="female">female</option>
+                     </select>
+                  </mat-form-field>
+               </div>
+               <div>
+                  <mat-form-field style="padding-right: 10px">
+                     <mat-label>maximum age</mat-label>
+                     <select matNativeControl name="maximum" formControlName="maximum">
+                        <option *ngFor="let age of agies" [value]="age">{{age}}</option>
+                     </select>
+                  </mat-form-field>
+                  <mat-form-field>
+                     <mat-label> minimum age</mat-label>
+                     <select matNativeControl name="minimum" formControlName="minimum">
+                        <option [value]="age" *ngFor="let age of agies">
+                           {{age}}</option>
+                     </select>
+                  </mat-form-field>
+               </div>
+               <div>
+                  <p>range of residense:</p>
+                  <mat-slider name="range" thumbLabel [displayWith]="formatLabel" tickInterval="10" min="1" max="100"
+                     formControlName="range"></mat-slider>
+               </div>
+               <div>
+                  <mat-form-field>
+                     <textarea matInput rows="4" placeholder="summery" name="summery"
+                        formControlName="summery"></textarea>
+                  </mat-form-field>
+               </div>
+               <div class="buttonSub">
+                  <button type="submit" mat-raised-button color="primary">
+                     {{typeButton}}
+                  </button>
+               </div>
+            </form>
+         </mat-card>
+         <!-- -------------------------------------------------->
+         <mat-card *ngIf="status">
+            <mat-card-header>
+               <div (click)="filePicker.click()" [ngStyle]="{'background-image': 'url('+ getImage()+')'}"
+                  mat-card-avatar class="example-header-image"></div>
+               <mat-card-title *ngIf="profile">{{profile.firstName }}{{profile.lastName}}</mat-card-title>
+               <mat-card-subtitle *ngIf="profile" >{{profile.city}}</mat-card-subtitle>
+               <input type="file" #filePicker (change)="EditeImagePicked($event)">
+            </mat-card-header>
+            <mat-card-content>
+               <ul class="list-group list-group-flush">
+                  <li class="list-group-item  d-flex justify-content-between align-items-center">
+                     Phone Number
+                     <span  *ngIf="profile"  class="badge badge-success">
+                        {{profile.phoneNumber}}
+                     </span>
+                  </li>
+                  <li class="list-group-item  d-flex justify-content-between align-items-center">
+                     Age
+                     <span *ngIf="profile" class="badge badge-success">
+                        {{profile.age}}
+                     </span>
+                  </li>
+                  <li class="list-group-item  d-flex justify-content-between align-items-center">
+                     Favorite
+                     <span *ngIf="profile" class="badge badge-success">
+                        {{profile.favorite}}
+                     </span>
+                  </li>
+                  <li class="list-group-item  d-flex justify-content-between align-items-center">
+                     city
+                     <span *ngIf="profile" class="badge badge-success">
+                        {{profile.city}}
+                     </span>
+                  </li>
+                  <li class="list-group-item  d-flex justify-content-between align-items-center">
+                     minimum
+                     <span *ngIf="profile" class="badge badge-success">
+                        {{profile.minimum}}
+                     </span>
+                  </li>
+                  <li class="list-group-item  d-flex justify-content-between align-items-center">
+                     maximum
+                     <span *ngIf="profile"  class="badge badge-success">
+                        {{profile.maximum}}
+                     </span>
+                  </li>
+               </ul>
+               <!--   <ul class="list-inline">
               <li class="list-inline-item mr-3">
                <p>{{profile.phoneNumber}}</p>
                <p class="border-top">  phone</p>
@@ -213,25 +171,16 @@
                    <p>{{profile.summery}}</p>
                   -->
 
-           </mat-card-content>
-      
-      <div class="buttonSub">
-          <button 
-            type="submit"
-            (click)="edite()"
-             mat-raised-button
-             color="primary"> 
-            
-             {{typeButton}}
-          </button>
-        </div> 
-  
-  </mat-card>
+            </mat-card-content>
+            <div class="buttonSub">
+               <button type="submit" (click)="edite()" mat-raised-button color="primary">
+                  {{typeButton}}
+               </button>
+            </div>
 
+         </mat-card>
+
+      </div>
+
+   </div>
 </div>
-
-</div>
-</div>
-
-
-
