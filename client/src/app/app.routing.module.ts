@@ -4,9 +4,8 @@ import { postCreate } from './posts/post-create/post-create.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { authGaurd } from './auth/auth.guard';
-import { ProfilesComponent } from './profiles/profiles.component'
-import { HomeComponent } from './home/home.component';
-
+import { ProfilesComponent } from './controllers/profiles/profiles.component'
+import { HomeComponent } from './controllers/home/home.component';
 
 const route: Routes = [
   { path: '', component: LoginComponent },

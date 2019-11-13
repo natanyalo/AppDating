@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
 import { postCreate } from './posts/post-create/post-create.component';
-import { HeaderComponent } from './header/header.component'
+import { HeaderComponent } from './controllers/header/header.component'
 import { postService } from './posts/post.service'
 //import {} from 'ngx-bootstrap'
 // routing
@@ -16,13 +16,13 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component'
 import { userService } from './service/user.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './controllers/error/error.component';
 import { AngularMatrialModule } from './angular-matrial-module';
-import { ProfilesComponent } from './profiles/profiles.component';
+import { ProfilesComponent } from './controllers/profiles/profiles.component';
 import { profileService } from './service/profile.service'
-import { HomeCenterComponent } from './home/home-center/home-center.component';
-import { FriendComponent } from './home/friend/friend.component';
-import { HomeComponent } from './home/home.component';
+import { HomeCenterComponent } from './controllers/home/home-center/home-center.component';
+import { FriendComponent } from './controllers/home/friend/friend.component';
+import { HomeComponent } from './controllers/home/home.component';
 import { centerService } from './service/center.service';
 
 @NgModule({

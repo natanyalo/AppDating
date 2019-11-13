@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { centerService } from '../../service/center.service';
+import { centerService } from '../../../service/center.service';
 import { Profile } from 'src/app/models/profile.model';
 import { Subject, Subscription } from 'rxjs';
 

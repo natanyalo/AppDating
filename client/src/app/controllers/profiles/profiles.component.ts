@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-import { profileService } from '../service/profile.service'
-import { Profile } from '../models/profile.model';
+import { profileService } from '../../service/profile.service'
+import { Profile } from '../../models/profile.model';
 import { Observable, Subscription } from 'rxjs';
-import { mimeType } from '../posts/post-create/mime-type.validator'
+
 
 @Component({
   selector: 'app-profiles',
@@ -24,7 +24,7 @@ export class ProfilesComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.imagePreview = "http://localhost:3000/assets/images/images.png"
+    this.imagePreview = "http://localhost:3000/assets/images/person.png"
     this.status = false;
     this.typeButton = "Save"
     this.cities = ["dimona", "Tel-aviv", "Eilat", "hadera", "haifa"]
@@ -127,7 +127,7 @@ export class ProfilesComponent implements OnInit {
       }),
       image: new FormControl(null, {
         validators: [Validators.required],
-        asyncValidators: [mimeType]
+        asyncValidators: []
       })
     })
     this.form.reset();
