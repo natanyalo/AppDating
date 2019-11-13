@@ -1,26 +1,15 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _express = require('express');
-
-var _checkAuth = require('../middleware/check-auth');
-
-var _checkAuth2 = _interopRequireDefault(_checkAuth);
-
-var _homeCenter = require('../controllers/homeCenter');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//const middlewarFile=require('../middleware/file')
-
-//const multer= require('multer')
-var router = (0, _express.Router)();
-
-//next for to prevent situion that the code stack because it
-//is not send back response
-router.get("", _homeCenter.getUsers);
-router.post("/want", _checkAuth2.default, _homeCenter.addWant);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const homeCenter_1 = require("../controllers/homeCenter");
+const check_auth_1 = __importDefault(require("../middleware/check-auth"));
+const router = express_1.Router();
+// next for to prevent sitution that the code stack because it
+// is not send back response
+router.get("", homeCenter_1.getUsers);
+router.post("/want", check_auth_1.default, homeCenter_1.addWant);
 exports.default = router;
+//# sourceMappingURL=homeCenter.js.map

@@ -1,9 +1,6 @@
 "use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var url = "mongodb://localhost:27017/Posts";
-
-var _url = url;
+Object.defineProperty(exports, "__esModule", { value: true });
+const url = "mongodb://localhost:27017/DateApp";
+const _url = url;
 exports.url = _url;
+//# sourceMappingURL=config.js.map

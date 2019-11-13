@@ -1,37 +1,18 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _express = require('express');
-
-var _multer = require('multer');
-
-var _multer2 = _interopRequireDefault(_multer);
-
-var _checkAuth = require('../middleware/check-auth');
-
-var _checkAuth2 = _interopRequireDefault(_checkAuth);
-
-var _post = require('../controllers/post');
-
-var _file = require('../middleware/file');
-
-var _file2 = _interopRequireDefault(_file);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var router = (0, _express.Router)();
-
-//next for to prevent situion that the code stack because it
-//is not send back response
-router.get("", _post.getPosts);
-
-router.post("", _checkAuth2.default, _file2.default, _post.createPost);
-
-router.put("", _post.upDataPost);
-
-router.delete("/:id", _checkAuth2.default, _file2.default, _post.deletePost);
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const post_1 = require("../controllers/post");
+const check_auth_1 = __importDefault(require("../middleware/check-auth"));
+const file_1 = __importDefault(require("../middleware/file"));
+const router = express_1.Router();
+// next for to prevent situion that the code stack because it
+// is not send back response
+router.get("", post_1.getPosts);
+router.post("", check_auth_1.default, file_1.default, post_1.createPost);
+router.put("", post_1.upDataPost);
+router.delete("/:id", check_auth_1.default, file_1.default, post_1.deletePost);
 exports.default = router;
+//# sourceMappingURL=posts.js.map

@@ -1,30 +1,16 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _express = require('express');
-
-var _checkAuth = require('../middleware/check-auth');
-
-var _checkAuth2 = _interopRequireDefault(_checkAuth);
-
-var _file = require('../middleware/file');
-
-var _file2 = _interopRequireDefault(_file);
-
-var _profile = require('../controllers/profile');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var router = (0, _express.Router)();
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const profile_1 = require("../controllers/profile");
+const check_auth_1 = __importDefault(require("../middleware/check-auth"));
+const file_1 = __importDefault(require("../middleware/file"));
+const router = express_1.Router();
 // function call without () is mean ref to function
-
-//const multer= require('multer')
-router.post("", _checkAuth2.default, _file2.default, _profile.saveProfile);
-router.put("", _checkAuth2.default, _file2.default, _profile.upDataProfile);
-router.get("", _checkAuth2.default, _profile.getProfile);
-
+router.post("", check_auth_1.default, file_1.default, profile_1.saveProfile);
+router.put("", check_auth_1.default, file_1.default, profile_1.upDateProfile);
+router.get("", check_auth_1.default, profile_1.getProfile);
 exports.default = router;
+//# sourceMappingURL=profile.js.map

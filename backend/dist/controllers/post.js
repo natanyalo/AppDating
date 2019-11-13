@@ -1,70 +1,71 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getPosts = getPosts;
-exports.createPost = createPost;
-exports.upDataPost = upDataPost;
-exports.deletePost = deletePost;
-
-var _post = require('../models/post');
-
-var _post2 = _interopRequireDefault(_post);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//next for to prevent situion that the code stack because it
-//is not send back response
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const post_1 = __importDefault(require("../models/post"));
+// next for to prevent situion that the code stack because it
+// is not send back response
 function getPosts(req, res, next) {
-    var pageSize = +req.query.pageSize;
-    var pageCurrent = +req.query.page;
-    var postQuery = (0, _post.find)();
+    const pageSize = +req.query.pageSize;
+    const pageCurrent = +req.query.page;
+    const postQuery = find();
     if (pageCurrent && pageSize) {
-        postQuery.skip(pageSize * (pageCurrent - 1)).limit(pageSize);
+        postQuery.skip(pageSize * (pageCurrent - 1))
+            .limit(pageSize);
     }
-
-    postQuery.find().then(function (datas) {
+    postQuery.find().then((datas) => {
         res.json({ messege: "all post", post: datas });
     });
 }
-
+exports.getPosts = getPosts;
 function createPost(req, res, next) {
-
     console.log(req.file.filename);
-    var url = req.protocol + '://' + req.get("host");
-    var newpost = new _post2.default({
+    const url = req.protocol + "://" + req.get("host");
+    const newpost = new post_1.default({
         title: req.body.title,
         content: req.body.content,
         imagePath: url + "/images/" + req.file.filename,
         creator: req.userData.userId
     });
-
-    newpost.save().then(function (result) {
+    newpost.save().then((result) => {
         res.status(200).json(newpost);
-    }).catch(function (e) {
+    }).catch((e) => {
         res.status(400).json({ messege: "create post is fail" });
     });
 }
+exports.createPost = createPost;
 function upDataPost(req, res, next) {
-
     console.log(req.body);
-    var upPost = new _post2.default({
+    const upPost = new post_1.default({
         _id: req.body.id,
         title: req.body.title,
         content: req.body.content,
         creator: req.body.creator
     });
-
-    (0, _post.updateOne)({ _id: req.body.id, creator: req.userData.userId }, upPost).then(function (result) {
-        if (result.nModified > 0) res.status(200).json({});else res.status(400).json({ messege: "updata post is fail" });
+    updateOne({ _id: req.body.id, creator: req.userData.userId }, upPost)
+        .then((result) => {
+        if (result.nModified > 0) {
+            res.status(200).json({});
+        }
+        else {
+            res.status(400).json({ messege: "updata post is fail" });
+        }
     });
 }
-
+exports.upDataPost = upDataPost;
 function deletePost(req, res, next) {
-    (0, _post.deleteOne)({ _id: req.params.id, creator: req.userData.userId }).then(function (result) {
-        if (result.n > 0) res.status(200).json({});else res.status(400).json({ messege: "delete post failed" });
-    }).catch(function (e) {
+    deleteOne({ _id: req.params.id, creator: req.userData.userId })
+        .then((result) => {
+        if (result.n > 0) {
+            res.status(200).json({});
+        }
+        else {
+            res.status(400).json({ messege: "delete post failed" });
+        }
+    }).catch((e) => {
         res.status(400).json({ messege: "delete post failed" });
     });
 }
+exports.deletePost = deletePost;
+//# sourceMappingURL=post.js.map

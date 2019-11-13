@@ -1,9 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const profile_1 = require("../models/profile");
-function saveProfile(req, res) {
+import { IProfile, Profile } from "../models/profile";
+
+export function saveProfile(req: any, res: any) {
     const url = req.protocol + "://" + req.get("host");
-    const newProfile = new profile_1.Profile({
+    const newProfile = new Profile({
         age: req.body.age,
         city: req.body.city,
         creator: req.userData.userId,
@@ -17,16 +16,16 @@ function saveProfile(req, res) {
         range: req.body.range,
         summery: req.body.summery,
     });
-    newProfile.save().then((result) => {
+    newProfile.save().then((result: any) => {
         res.status(200).json(result);
-    }).catch((error) => {
+    }).catch((error: any) => {
         res.status(400).json({ messege: "create profile is fail" });
     });
 }
-exports.saveProfile = saveProfile;
-function upDateProfile(req, res) {
+
+export function upDateProfile(req: any, res: any) {
     const url = req.protocol + "://" + req.get("host");
-    const newProfile = new profile_1.Profile({
+    const newProfile = new Profile({
         phoneNumber: req.body.phoneNumber,
         lastName: req.body.lastName,
         firstName: req.body.firstName,
@@ -41,27 +40,24 @@ function upDateProfile(req, res) {
         imagePath: url + "/images/" + req.file.filename,
         creator: req.userData.userId,
     });
-    profile_1.Profile.updateOne({ _id: req.body.id, creator: req.userData.userId }, newProfile)
-        .then((result) => {
-        if (result.nModified > 0) {
-            res.status(200).json({});
-        }
-        else {
-            res.status(400).json({ messege: "updata profile is fail" });
-        }
-    });
+    Profile.updateOne({ _id: req.body.id, creator: req.userData.userId }, newProfile)
+        .then((result: any) => {
+            if (result.nModified > 0) {
+                res.status(200).json({});
+            } else {
+                res.status(400).json({ messege: "updata profile is fail" });
+            }
+        });
 }
-exports.upDateProfile = upDateProfile;
-function getProfile(req, res) {
+
+export function getProfile(req: any, res: any) {
     const id = req.userData.userId;
-    profile_1.Profile.findOne({ creator: id }, function (err, profile) {
+    Profile.findOne({ creator: id }, function(err: any, profile: IProfile) {
         if (err) {
             res.status(400).json({ messege: "cant find a profile" });
-        }
-        else {
+        } else {
             res.status(200).json({ profile });
         }
+
     });
 }
-exports.getProfile = getProfile;
-//# sourceMappingURL=profile.js.map

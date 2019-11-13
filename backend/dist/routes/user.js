@@ -1,18 +1,10 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _express = require('express');
-
-var _user = require('../controllers/user');
-
-var router = (0, _express.Router)();
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const user_1 = require("../controllers/user");
+const router = express_1.Router();
 // function call without () is mean ref to function
-router.post("/signup", _user.userSignUp);
-
-router.post("/login", _user.userLogin);
-
+router.post("/signup", user_1.userSignUp);
+router.post("/login", user_1.userLogin);
 exports.default = router;
+//# sourceMappingURL=user.js.map

@@ -1,75 +1,76 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.userSignUp = userSignUp;
-exports.userLogin = userLogin;
-
-var _bcrypt = require('bcrypt');
-
-var _jsonwebtoken = require('jsonwebtoken');
-
-var _user = require('../models/user');
-
-var _user2 = _interopRequireDefault(_user);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const bcrypt_1 = require("bcrypt");
+const jsonwebtoken_1 = require("jsonwebtoken");
+const user_1 = require("../models/user");
 function userSignUp(req, res, next) {
-    (0, _bcrypt.hash)(req.body.password, 10).then(function (hash) {
-        var user = new _user2.default({
+    bcrypt_1.hash(req.body.password, 10).
+        then((hash) => {
+        const user = new user_1.User({
             email: req.body.email,
             password: hash,
             lastName: req.body.lastname,
             firstName: req.body.firstname
-
         });
-
-        user.save().then(function (result) {
-            var token = (0, _jsonwebtoken.sign)({
+        user.save().then((result) => {
+            const token = jsonwebtoken_1.sign({
                 email: result.email,
                 userId: result._id
             }, process.env.JWT_TOKEN, { expiresIn: "1h" });
             res.status(200).json({
-                token: token, timer: "3000",
+                token, timer: "3000",
                 userId: result._id
             });
-        }).catch(function (error) {
-            res.status(400).json({ error: error });
+        }).catch((error) => {
+            res.status(400).json({ error });
         });
     });
 }
-
-function userLogin(req, res, next) {
-
-    var userfatch = void 0;
-    (0, _user.findOne)({ email: req.body.email }).then(function (user) {
-        //condition for find user
-
-        if (!user) return res.status(401).json({
-            messege: "auth faild"
-        });
-
-        userfatch = user;
-        return (0, _bcrypt.compare)(req.body.password, user.password);
-    }).then(function (result) {
-        if (!result) return res.status(401).json({
-            messege: "auth failed"
-        });
-        console.log("process.env.JWT_TOKEN", process.env.JWT_TOKEN);
-        var token = (0, _jsonwebtoken.sign)({
-            email: userfatch.email,
-            userId: userfatch._id
-        }, process.env.JWT_TOKEN, { expiresIn: "1h" });
-
-        res.status(200).json({
-            token: token, timer: "3000",
-            userId: userfatch._id
-        });
-    }).catch(function (error) {
-        return res.status(401).json({
-            messege: " auth failed"
+exports.userSignUp = userSignUp;
+function userLogin(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("fff");
+        let userfatch = yield user_1.User.findOne({ email: req.body.email }).
+            then((user) => {
+            if (!user) {
+                return res.status(401).json({
+                    messege: "auth faild"
+                });
+            }
+            console.log("111", user);
+            userfatch = user;
+            return bcrypt_1.compare(req.body.password, user.password);
+        }).then((result) => {
+            console.log("2222");
+            if (!result) {
+                return res.status(401).json({
+                    messege: "auth failed"
+                });
+            }
+            const token = jsonwebtoken_1.sign({
+                email: userfatch.email,
+                userId: userfatch._id
+            }, process.env.JWT_TOKEN, { expiresIn: "1h" });
+            res.status(200).json({
+                token, timer: "3000",
+                userId: userfatch._id
+            });
+        })
+            .catch((error) => {
+            return res.status(401).json({
+                messege: " auth failed"
+            });
         });
     });
 }
+exports.userLogin = userLogin;
+//# sourceMappingURL=user.js.map
