@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { centerService } from './center.service';
-import { Profile } from 'src/app/profiles/profile.model';
+import { centerService } from '../../service/center.service';
+import { Profile } from 'src/app/models/profile.model';
 import { Subject, Subscription } from 'rxjs';
 
 @Component({
@@ -9,7 +9,6 @@ import { Subject, Subscription } from 'rxjs';
   styleUrls: ['./home-center.component.css']
 })
 export class HomeCenterComponent implements OnInit {
-
   indexUser: number = 0;
   fullName: string
   currentUser: Profile

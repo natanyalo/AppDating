@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Profile } from '../../profiles/profile.model'
+import { Profile } from '../models/profile.model'
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
-import { environment } from '../../../environments/environment'
+import { environment } from '../../environments/environment'
 Injectable()
 export class centerService {
-
     url = environment.urlApi + "center";
     listUser: Profile[]
     private ListUserSub = new Subject<Profile[]>();
 
     constructor(private http: HttpClient,
         private router: Router) { }
-
     getUsers() {
         return this.ListUserSub.asObservable();
     }
-
     getAllUser() {
         const userId = localStorage.getItem("userId")
         this.http.get<{ users: any }>(this.url)
@@ -28,12 +25,8 @@ export class centerService {
                     t.imagePath = t['imagePath'];
                 })
                 this.ListUserSub.next([...this.listUser])
-
-
             })
-
     }
-
     addFriend(profile: Profile) {
         console.log(profile.creator)
         this.http.post(this.url + "/want", {
@@ -48,5 +41,4 @@ export class centerService {
             }
         )
     }
-
 }

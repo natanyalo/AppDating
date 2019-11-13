@@ -13,7 +13,6 @@
                   <mat-form-field style="padding-right: 10px">
                      <input type="text" matInput name="firstName" formControlName="firstName" placeholder="first name">
                   </mat-form-field>
-
                   <mat-form-field>
                      <input matInput type="text" placeholder="last name" formControlName="lastName" name="lastName">
                   </mat-form-field>
@@ -90,14 +89,14 @@
                <div (click)="filePicker.click()" [ngStyle]="{'background-image': 'url('+ getImage()+')'}"
                   mat-card-avatar class="example-header-image"></div>
                <mat-card-title *ngIf="profile">{{profile.firstName }}{{profile.lastName}}</mat-card-title>
-               <mat-card-subtitle *ngIf="profile" >{{profile.city}}</mat-card-subtitle>
+               <mat-card-subtitle *ngIf="profile">{{profile.city}}</mat-card-subtitle>
                <input type="file" #filePicker (change)="EditeImagePicked($event)">
             </mat-card-header>
             <mat-card-content>
                <ul class="list-group list-group-flush">
                   <li class="list-group-item  d-flex justify-content-between align-items-center">
                      Phone Number
-                     <span  *ngIf="profile"  class="badge badge-success">
+                     <span *ngIf="profile" class="badge badge-success">
                         {{profile.phoneNumber}}
                      </span>
                   </li>
@@ -127,60 +126,18 @@
                   </li>
                   <li class="list-group-item  d-flex justify-content-between align-items-center">
                      maximum
-                     <span *ngIf="profile"  class="badge badge-success">
+                     <span *ngIf="profile" class="badge badge-success">
                         {{profile.maximum}}
                      </span>
                   </li>
                </ul>
-               <!--   <ul class="list-inline">
-              <li class="list-inline-item mr-3">
-               <p>{{profile.phoneNumber}}</p>
-               <p class="border-top">  phone</p>
-              </li>
-              <li class="list-inline-item mr-3 ">
-                  <p>{{profile.age}}</p>
-               <p class="border-top">  age</p>
-               </li>
-               <li class="list-inline-item">
-                     <p>{{profile.city}}</p>
-               <p class="border-top">  city</p>
-               </li>
-             </ul>
-             <ul class="list-inline">
-                  <li class="list-inline-item mr-3">
-                        <p>{{profile.favorite}}</p>
-                        <p class="border-top">favorite</p>
-                  </li>
-                  <li class="list-inline-item mr-3">
-                        <p>{{profile.minimum}}</p>
-                        <p class="border-top">minimum</p>
-                   </li>
-                   <li class="list-inline-item">
-                        <p>{{profile.maximum}}</p>
-                        <p class="border-top">maximum</p>
-                   </li>
-                 </ul>
-                 <ul class="list-inline mr-3">
-                     <li class="list-inline-item">
-                           <p>{{profile.range}}</p>
-                           <p class="border-top">range</p>
-                     </li>
-                
-                    </ul>
-                    <p>summery:</p>
-                   <p>{{profile.summery}}</p>
-                  -->
-
             </mat-card-content>
             <div class="buttonSub">
                <button type="submit" (click)="edite()" mat-raised-button color="primary">
                   {{typeButton}}
                </button>
             </div>
-
          </mat-card>
-
       </div>
-
    </div>
 </div>

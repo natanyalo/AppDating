@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
-import { userService } from './user.service';
+import { userService } from '../service/user.service';
 
 
 Injectable()

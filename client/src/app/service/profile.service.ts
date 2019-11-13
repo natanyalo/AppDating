@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Profile } from './profile.model'
+import { Profile } from '../models/profile.model'
 import { Subject, pipe, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
@@ -7,22 +7,20 @@ import { Router } from '@angular/router'
 import { environment } from '../../environments/environment'
 Injectable()
 export class profileService {
-
-  port = environment.urlApi + "profile";
-  profile: Profile
+  private port = environment.urlApi + "profile";
+  private profile: Profile
   private profileSub = new Subject<Profile>();
-
-  constructor(private http: HttpClient,
-    private router: Router) { }
-
+  constructor(
+    private http: HttpClient,
+    private router: Router
+    ) { }
   public getProfile() {
     return this.profileSub.asObservable();
   }
   public getProfileApi() {
     return this.http.get<{ profile: Profile }>(this.port)
       .pipe(map((res) => {
-        console.log(res.profile)
-        return {
+        this.profile = {
           firstName: res.profile.firstName,
           lastName: res.profile.lastName,
           range: res.profile.range,
@@ -35,6 +33,8 @@ export class profileService {
           imagePath: res.profile.imagePath,
           creator: res.profile.creator,
         }
+        this.profileSub.next({... this.profile});
+        return this.profile;
       }));
   }
   public updataProfile(profile: Profile) {
@@ -52,25 +52,17 @@ export class profileService {
     Data.append('id', this.profile.id)
     Data.append('phoneNumber', profile.phoneNumber)
     this.http.put(this.port, Data).subscribe((res: Profile) => {
-
       this.profile = res;
       this.profile.id = res["_id"]
       this.profile.imagePath = res["imagePath"]
       this.profileSub.next({ ... this.profile })
-
       console.log("okup", res)
     },
-      error => {
+      () => {
         console.log("badup")
       })
-
   }
-
-  createProfile(profile: Profile) {
-    console.log(profile)
-    /*hey my name is Natan , I would like  
-    to know new friends , 
-    so who want to know me he invited to know me */
+  public createProfile(profile: Profile) {
     const Data = new FormData();
     Data.append('firstName', profile.firstName)
     Data.append('lastName', profile.lastName)
@@ -83,7 +75,6 @@ export class profileService {
     Data.append('imagePath', profile.imagePath)
     Data.append('city', profile.city)
     Data.append('phoneNumber', profile.phoneNumber)
-
     this.http.post(this.port, Data).subscribe((res: Profile) => {
       this.profile = res;
       this.profile.id = res["_id"]
@@ -91,7 +82,7 @@ export class profileService {
       this.profileSub.next({ ... this.profile })
       console.log("okcreate", res)
     },
-      error => {
+      () => {
         console.log("badcreate")
       })
 

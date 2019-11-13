@@ -1,6 +1,5 @@
 import { NgModule, Component } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ListPostComponent } from './posts/list-post/list-post.component';
 import { postCreate } from './posts/post-create/post-create.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
@@ -24,7 +23,6 @@ const route: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(route),
-
   ],
   exports: [RouterModule],//export the ngModule
   providers: [authGaurd]
