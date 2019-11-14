@@ -7,16 +7,17 @@ import { Router } from '@angular/router'
 import { environment } from '../../environments/environment'
 Injectable()
 export class centerService {
-    url = environment.urlApi + "center";
-    listUser: Profile[]
+    private url = environment.urlApi + "center";
+    private listUser: Profile[]
     private ListUserSub = new Subject<Profile[]>();
-
-    constructor(private http: HttpClient,
-        private router: Router) { }
-    getUsers() {
+    constructor(
+        private http: HttpClient,
+        private router: Router
+        ){ }
+    public getUsers() {
         return this.ListUserSub.asObservable();
     }
-    getAllUser() {
+    public getAllUser() {
         const userId = localStorage.getItem("userId")
         this.http.get<{ users: any }>(this.url)
             .subscribe(res => {
@@ -27,8 +28,7 @@ export class centerService {
                 this.ListUserSub.next([...this.listUser])
             })
     }
-    addFriend(profile: Profile) {
-        console.log(profile.creator)
+    public addFriend(profile: Profile) {
         this.http.post(this.url + "/want", {
             wantId: profile.creator,
             creatorId: localStorage.getItem("userId")

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
-import { profileService } from '../../service/profile.service'
+import { profileService } from '../../services/profile.service'
 import { Profile } from '../../models/profile.model';
 import { Observable, Subscription } from 'rxjs';
 

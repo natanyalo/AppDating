@@ -1,6 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { userService } from '../../service/user.service'
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { userService } from '../../services/user.service'
 import { Subscription } from 'rxjs'
+import { profileService } from 'src/app/services/profile.service';
+import { Profile } from 'src/app/models/profile.model';
+
 
 @Component({
   selector: 'app-header',
@@ -9,15 +12,26 @@ import { Subscription } from 'rxjs'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private isUserAuth: boolean;
-  private authListenerSubs: Subscription
-  private imagePath: boolean;
-  constructor(private userService: userService) { }
+  private authListenerSubs: Subscription;
+  private imagePath: string;
+  private imagePathSub: Subscription;
+  constructor(
+    private userService: userService,
+    private profileService: profileService
+  ) { }
 
   ngOnInit() {
     this.isUserAuth = false;
-    this.isUserAuth = this.userService.getAuth()
+    this.imagePath = "assets/images/person.png";
     this.authListenerSubs = this.userService.getAuthListener()
-      .subscribe((isAuthenticaed: boolean) => this.isUserAuth = isAuthenticaed)
+      .subscribe((isAuthenticaed: boolean) => {
+        this.isUserAuth = isAuthenticaed;
+        this.imagePathSub= this.profileService.getProfileApi()
+        .subscribe((item: Profile) => {
+         this.imagePath=item.imagePath;
+        });
+      });
+    
   }
 
   public onLogOut() {
@@ -25,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   public ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
+    this.imagePathSub.unsubscribe();
   }
 
 }

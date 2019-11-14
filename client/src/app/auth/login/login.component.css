@@ -1,15 +1,15 @@
-mat-card{
-    padding-top:10px; 
-    width: 50%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100px;
-    margin: auto; 
+mat-card {
+  padding-top: 10px;
+  width: 50%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  margin: auto;
 }
 
-
-mat-form-field ,button{
-    width: 70%;
-    margin:20px;  
+mat-form-field,
+button {
+  width: 70%;
+  margin: 20px;
 }

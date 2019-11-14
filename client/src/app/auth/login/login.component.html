@@ -1,14 +1,13 @@
 <mat-card>
-    <form class="form-inline justify-content-center" *ngIf="!isLoading" (submit)="onLogin(loginForm)"
-      #loginForm="ngForm">
-      <mat-form-field>
-        <input type="email" matInput name="email" placeholder="email" ngModel>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="password" placeholder="password" name="password" ngModel>
-      </mat-form-field>
-        <button type="submit" mat-raised-button color="primary">
-          login
-        </button>
-    </form>
+  <form class="form-inline justify-content-center" *ngIf="!isLoading" (submit)="onLogin(loginForm)" #loginForm="ngForm">
+    <mat-form-field>
+      <input type="email" matInput name="email" placeholder="email" ngModel>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="password" placeholder="password" name="password" ngModel>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">
+      login
+    </button>
+  </form>
 </mat-card>
