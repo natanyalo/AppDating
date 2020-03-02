@@ -3,15 +3,16 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { authGaurd } from './auth/auth.guard';
-import { ProfilesComponent } from './controllers/profiles/profiles.component'
 import { HomeComponent } from './controllers/home/home.component';
-
+import {ChetsComponent} from './controllers/home/chets/chets.component'
 const route: Routes = [
   { path: '', component: LoginComponent },
-  //protected
   { path: 'home', component: HomeComponent, canActivate: [authGaurd] },
-  { path: 'profile', component: ProfilesComponent, canActivate: [authGaurd] },
-  { path: 'profile/:userId', component: ProfilesComponent, canActivate: [authGaurd] },
+  {
+    path: 'profile', loadChildren: () => import(`./controllers/profiles/profile.module`)
+    .then(m => m.ProfileModule), canActivate: [authGaurd],
+  },
+  {path:'chet/:profileId', component:ChetsComponent, canActivate:[authGaurd]},
   { path: 'login', component: LoginComponent },
   { path: 'signUp', component: SignUpComponent }
 

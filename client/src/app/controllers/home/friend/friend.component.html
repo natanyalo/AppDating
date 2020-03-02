@@ -1,1 +1,14 @@
-<p>friend works!</p>
+<div class=" mt-5" >
+    <ul class="navbar-nav mr-auto" *ngFor="let friend of _friends">
+        <div  (click)="changeUser(friend.id)" 
+        [ngClass]="friend.id === _courentUser? 'border border-primary w-100 p-2 mt-2': 'border border-secondary w-100 p-2 mt-2' "
+        >
+            <span class="nav-item">
+                <span href="#" class="text-white"  [routerLink]='friend.id'>
+                    <img class="rounded-circle mr-2" [src]='friend.image' width="30" height="30" alt="">
+                    {{friend.firstName}} {{friend.lastName}}
+                </span>
+            </span>
+        </div>
+    </ul>
+</div>

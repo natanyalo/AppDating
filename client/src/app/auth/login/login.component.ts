@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { userService } from '../../services/user.service';
+import { UserService } from '../../services/user.service';
 import { from } from 'rxjs';
 
 @Component({
@@ -10,7 +10,9 @@ import { from } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
   private isLoading: boolean = false
-  constructor(private userService: userService) { }
+  constructor(
+    private userService: UserService
+    ) { }
 
   ngOnInit() {
   }

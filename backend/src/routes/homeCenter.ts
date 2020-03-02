@@ -6,6 +6,6 @@ const router = Router();
 
 // next for to prevent sitution that the code stack because it
 // is not send back response
-router.get("", getUsers);
+router.get("", checkAuth ,getUsers);
 router.post("/want", checkAuth, addWant);
 export default router;

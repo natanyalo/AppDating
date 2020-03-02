@@ -1,14 +1,18 @@
 import app from "./app";
-import debug  from "debug";
+import debug from "debug";
 import http from "http";
-process.env.JWT_TOKEN="secret"
+import mongoose from "mongoose";
+import { url } from "./models/config";
+import {SocketChet} from './controllers/chets'
+
+mongoose.connect(url);
+process.env.JWT_TOKEN = "secret"
 const normalizePort = (val: any) => {
   const port = parseInt(val, 10);
   if (isNaN(port)) {
     // named pipe
     return val;
   }
-
   if (port >= 0) {
     // port number
     return port;
@@ -35,17 +39,15 @@ const onError = (error: any) => {
       throw error;
   }
 };
-
 const onListening = () => {
   const addr = server.address();
   const bind = typeof port === "string" ? "pipe " + port : "port " + port;
   debug("Listening on " + bind);
 };
-
 const port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
-
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
-server.listen(port);
+const Server = server.listen(port);
+SocketChet(Server);

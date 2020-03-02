@@ -10,18 +10,22 @@ import { HeaderComponent } from './controllers/header/header.component'
 import { AppRoutingMoudel } from './app.routing.module';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component'
-import { userService } from './services/user.service';
+import { UserService } from './services/user.service';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './controllers/error/error.component';
 import { AngularMatrialModule } from './angular-matrial-module';
-import { ProfilesComponent } from './controllers/profiles/profiles.component';
-import { profileService } from './services/profile.service'
 import { HomeCenterComponent } from './controllers/home/home-center/home-center.component';
 import { FriendComponent } from './controllers/home/friend/friend.component';
 import { HomeComponent } from './controllers/home/home.component';
-import { centerService } from './services/center.service';
+import { CenterService } from './services/center.service';
+import { FriendService } from './services/friend.service';
+import { ChetsComponent } from './controllers/home/chets/chets.component';
 
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,9 +34,9 @@ import { centerService } from './services/center.service';
     LoginComponent,
     SignUpComponent,
     ErrorComponent,
-    ProfilesComponent,
     HomeCenterComponent,
-    FriendComponent
+    FriendComponent,
+    ChetsComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,11 +45,12 @@ import { centerService } from './services/center.service';
     HttpClientModule,
     AppRoutingMoudel,
     FormsModule,
-    AngularMatrialModule
+    AngularMatrialModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     , { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
-    , userService, profileService, centerService
+    , UserService, CenterService,FriendService
   ],
   bootstrap: [AppComponent]
   ,
@@ -55,7 +60,7 @@ import { centerService } from './services/center.service';
 //a component that you cant see at but create it
 export class AppModule implements OnInit {
 
-  constructor(private userServerice: userService) { }
+  constructor(private userServerice: UserService) { }
   ngOnInit() {
     //thise case for run auth befor app
     this.userServerice.autoAuthUser();

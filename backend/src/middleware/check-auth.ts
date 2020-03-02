@@ -3,6 +3,7 @@ import { verify } from "jsonwebtoken";
 // למשימה הבא
 export default (req: any, res: any, next: any) => {
   try {
+   
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = verify(token, "secret") as {email: string , userId: string}; // if is not verfiy is trow error
     req.userData = { email: decodedToken.email, userId: decodedToken.userId };

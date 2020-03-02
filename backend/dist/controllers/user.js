@@ -18,8 +18,6 @@ function userSignUp(req, res, next) {
         const user = new user_1.User({
             email: req.body.email,
             password: hash,
-            lastName: req.body.lastname,
-            firstName: req.body.firstname
         });
         user.save().then((result) => {
             const token = jsonwebtoken_1.sign({
@@ -38,37 +36,25 @@ function userSignUp(req, res, next) {
 exports.userSignUp = userSignUp;
 function userLogin(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("fff");
-        let userfatch = yield user_1.User.findOne({ email: req.body.email }).
-            then((user) => {
-            if (!user) {
-                return res.status(401).json({
-                    messege: "auth faild"
-                });
-            }
-            console.log("111", user);
-            userfatch = user;
-            return bcrypt_1.compare(req.body.password, user.password);
-        }).then((result) => {
-            console.log("2222");
-            if (!result) {
-                return res.status(401).json({
-                    messege: "auth failed"
-                });
-            }
-            const token = jsonwebtoken_1.sign({
-                email: userfatch.email,
-                userId: userfatch._id
-            }, process.env.JWT_TOKEN, { expiresIn: "1h" });
-            res.status(200).json({
-                token, timer: "3000",
-                userId: userfatch._id
+        let userfatch = yield user_1.User.findOne({ email: req.body.email });
+        if (!userfatch) {
+            res.status(401).json({
+                messege: "auth faild"
             });
-        })
-            .catch((error) => {
-            return res.status(401).json({
-                messege: " auth failed"
+        }
+        const verifyPassword = yield bcrypt_1.compare(req.body.password, userfatch.password);
+        if (!verifyPassword) {
+            res.status(401).json({
+                messege: "auth faild"
             });
+        }
+        const token = jsonwebtoken_1.sign({
+            email: userfatch.email,
+            userId: userfatch._id
+        }, process.env.JWT_TOKEN, { expiresIn: "1h" });
+        res.status(200).json({
+            token, timer: "3000",
+            userId: userfatch._id
         });
     });
 }

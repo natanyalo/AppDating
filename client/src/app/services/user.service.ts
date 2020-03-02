@@ -5,9 +5,9 @@ import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { environment } from '../../environments/environment'
-import { profileService } from './profile.service'
+import { ProfileService } from './profile.service'
 Injectable()
-export class userService {
+export class UserService {
     private userId: string;
     private token: string;
     private authUser: boolean;
@@ -17,7 +17,7 @@ export class userService {
     constructor(
         private http: HttpClient,
         private router: Router,
-        private profileService: profileService
+        private profileService: ProfileService
     ) {}
     public getUserId() {
         return this.userId;
@@ -43,11 +43,10 @@ export class userService {
                     const now = new Date()
                     const expirationDate = new Date(now.getTime() + res.timer * 1000)
                     this.saveAuthDate(expirationDate, this.token, this.userId)
-                    this.router.navigate(['/'])
+                    this.router.navigate(['/profile/display'])
                 }
             },
                 () => {
-                    console.log("errorrrrr")
                 })
     }
     public Login(email: string, password: string) {
@@ -66,8 +65,7 @@ export class userService {
                     this.router.navigate(['/home'])
                 }
             },
-                () => {
-                    console.log("errorrrrr")
+                () => {                
                 })
     }
     public logOut() {
@@ -76,8 +74,8 @@ export class userService {
         this.token = null
         this.removeAuthDate();
         this.AuthListener.next(false)
-        this.router.navigate(['/'])
         clearInterval(this.timerToken)
+        this.router.navigate(['/login'])
     }
     public autoAuthUser() {
         const inforamtionAuth = this.getAuthDate()

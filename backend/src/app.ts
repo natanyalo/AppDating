@@ -1,16 +1,14 @@
 import { json, urlencoded } from "body-parser";
 import express from "express";
-import mongoose from "mongoose";
 import { join } from "path";
-import { url } from "./models/config";
 import homeCenter from "./routes/homeCenter";
-// import posts from "./routes/posts";
+
 import profile from "./routes/profile";
 import users from "./routes/user";
+import friend from "./routes/friend";
+import notification from "./routes/notification";
 
 const app = express();
-
-mongoose.connect(url);
 
 app.use(urlencoded({ extended: true }));
 app.use(json());
@@ -31,9 +29,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use("/api/post", posts);
+
 app.use("/api/center", homeCenter);
 app.use("/api/user", users);
 app.use("/api/profile", profile);
+app.use("/api/friend", friend);
+app.use("/api/notification", notification);
 
 export default app;

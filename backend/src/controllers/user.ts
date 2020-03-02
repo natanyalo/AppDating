@@ -9,10 +9,9 @@ export function userSignUp(req: any, res: any, next: any) {
             const user = new User({
                 email: req.body.email,
                 password: hash,
-                lastName: req.body.lastname,
-                firstName: req.body.firstname
             });
-            user.save().then((result: IUser) => {
+            user.save().then((result: IUser) =>
+             {
                 const token = sign({
                     email: result.email,
                     userId: result._id

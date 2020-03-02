@@ -1,10 +1,22 @@
 import { IProfile, Profile } from "../models/profile";
 
+export function getProfile(req: any, res: any) {
+    const id = req.userData.userId;
+    Profile.findOne({ creator: id }, function (err: any, profile: IProfile) {
+        if (err) {
+            res.status(400).json({ messege: "cant find a profile" });
+        } else {
+            res.status(200).json({ profile });
+        }
+    });
+}
+
 export function saveProfile(req: any, res: any) {
     const url = req.protocol + "://" + req.get("host");
     const newProfile = new Profile({
         age: req.body.age,
-        city: req.body.city,
+        address:JSON.parse(req.body.address),
+        gender:req.body.gender,
         creator: req.userData.userId,
         imagePath: url + "/images/" + req.file.filename,
         firstName: req.body.firstName,
@@ -16,15 +28,19 @@ export function saveProfile(req: any, res: any) {
         range: req.body.range,
         summery: req.body.summery,
     });
-    newProfile.save().then((result: any) => {
+    newProfile.save()
+    .then((result: any) => {
         res.status(200).json(result);
-    }).catch((error: any) => {
-        res.status(400).json({ messege: "create profile is fail" });
-    });
+    })
+    .catch(
+        () => {
+            res.status(400).json({ messege: "create profile is fail" });
+        });
 }
 
 export function upDateProfile(req: any, res: any) {
     const url = req.protocol + "://" + req.get("host");
+    console.log(req.body)
     const newProfile = new Profile({
         phoneNumber: req.body.phoneNumber,
         lastName: req.body.lastName,
@@ -34,11 +50,13 @@ export function upDateProfile(req: any, res: any) {
         minimum: req.body.minimum,
         maximum: req.body.maximum,
         range: req.body.range,
+        gender:req.body.gender,
         summery: req.body.summery,
-        city: req.body.city,
+        address:JSON.parse(req.body.address),
         _id: req.body.id,
-        imagePath: url + "/images/" + req.file.filename,
+        imagePath: req.body.image,
         creator: req.userData.userId,
+
     });
     Profile.updateOne({ _id: req.body.id, creator: req.userData.userId }, newProfile)
         .then((result: any) => {
@@ -50,14 +68,3 @@ export function upDateProfile(req: any, res: any) {
         });
 }
 
-export function getProfile(req: any, res: any) {
-    const id = req.userData.userId;
-    Profile.findOne({ creator: id }, function(err: any, profile: IProfile) {
-        if (err) {
-            res.status(400).json({ messege: "cant find a profile" });
-        } else {
-            res.status(200).json({ profile });
-        }
-
-    });
-}

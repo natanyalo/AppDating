@@ -1,15 +1,18 @@
+import { Address } from './address';
+
 export interface Profile {
     id?: string,
     firstName: string,
     lastName: string,
-    range?: string,
+    range?: number,
+    gender:boolean;
     favorite?: string,
     summery?: string,
-    maximum?: string,
-    minimum?: string,
-    age: string,
-    city?: string,
+    maximum?: number,
+    minimum?: number,
+    age: number,
+    address: Address
     phoneNumber?: string,
-    imagePath?: string,
+    image?: string,
     creator?: string
 }

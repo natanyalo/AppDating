@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="menu-side col-md-3 bg-dark">
+        <app-friend class="app-friend"></app-friend>
+    </div>
+    <div class="main col-md-9" style="padding-left:0;">
+            <div   *ngIf="_chets===null">
+                <div class="no-messages">
+                    <img src="/assets/no-messages-illustration.svg" />
+                    <span class="title">No new message?</span>
+                    <span class="info">Send your first message below.</span>
+                </div>
+            </div>
+            <div *ngIf="_chets!==null" class="messages-container" 
+                #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                <ul>
+                    <li *ngFor="let message of _chets.messages"
+                        [style.flex-direction]="message.user === _courentUser ? 'row-reverse': 'row'">
+                        <img src="http://localhost:4200/assets/images/person.png" width="36px" height="37px" />
+                        <span
+                            [ngClass]="message.user === _courentUser ? 'speech-bubble-own': 'speech-bubble'">{{ message.message }}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="input-container">
+                <input placeholder="Type something" #messageInput (keydown.enter)="
+                                  onSendMessage(messageInput.value); messageInput.value = ''
+                                " />
+            </div>
+    </div>
+</div>

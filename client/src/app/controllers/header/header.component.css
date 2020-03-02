@@ -4,6 +4,33 @@ ul {
   list-style: none;
   display: flex;
 }
+.num {
+
+  right: 11px;
+  top: 6px;
+  color: #fff;
+}
+@media (max-width: 1600px) {
+  .title-app {
+    margin-right: 500px;
+  }
+}
+@media (max-width: 1000px) {
+  .title-app {
+    margin-right: 300px;
+  }
+}
+@media (max-width: 800px) {
+  .title-app {
+    margin-right: 200px;
+  }
+}
+@media (max-width: 600px) {
+  .title-app {
+    margin-right: 100px;
+  }
+}
+
 a {
   text-decoration: none;
   color: black;

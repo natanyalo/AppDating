@@ -1,26 +1,73 @@
 <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-success">
     <div class="container">
-        <a class="navbar-brand" *ngIf="isUserAuth" routerLink='/'>
-            MyApp
-        </a>
-        <ul class="navbar-nav  mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#" *ngIf="isUserAuth">
-                    <img [src]='imagePath' width="30" height="30" alt="">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" *ngIf="_isUserAuth" routerLink='/profile'>
+                <span>
+                    <img class="d-inline" [src]='_image' width="30" height="30" alt="">
+                    {{this._nameUser}}
+                </span>
+            </li>
+            <li *ngIf="_isUserAuth" class="nav-item dropdown ml-4">
+                <a [ngStyle]="_notificationMatchs.length && {'color': 'white'}"
+                    class="nav-link waves-effect waves-light" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span *ngIf='_notificationMatchs.length' class="badge badge-pill badge-primary"
+                        style="margin-bottom:-10px;">
+                        {{_notificationMatchs.length}}
+                    </span>
+                    <i class="fa fa-bell" aria-hidden="true"></i>
                 </a>
+                <div class="dropdown-menu ml-4" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="card-header">
+                        matchs
+                    </div>
+                    <ul *ngFor="let notificationMatch of _notificationMatchs" class="list-group list-group-flush">
+                        <li (click)="hideNotification(notificationMatch.creator,'match')"> <a
+                                [routerLink]="'/chet/'+notificationMatch.id" class="dropdown-item">you have a match with
+                                {{notificationMatch.firstName}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li *ngIf="_isUserAuth" class="nav-item dropdown ml-2">
+                <a [ngStyle]="_notificationMessages.length && {'color': 'white'}"
+                    class="nav-link waves-effect waves-light" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span *ngIf='_notificationMessages.length' class="badge badge-pill badge-primary"
+                        style="margin-bottom:-10px;">
+                        {{_notificationMessages.length}}
+                    </span>
+                    <i class="fab fa-facebook-messenger"></i>
+                </a>
+                <div class="dropdown-menu ml-4" aria-labelledby="navbarDropdownMenuLink">
+                    <div class="card-header">
+                        messages
+                    </div>
+                    <ul *ngFor="let notificationMessage of _notificationMessages" class="list-group list-group-flush">
+                        <li (click)="hideNotification(notificationMessage.creator,'message')"> 
+                            <a  [routerLink]="'/chet/'+notificationMessage.id" 
+                                class="dropdown-item">you have a new message from {{notificationMessage.firstName}}</a>
+                        </li>
+                    </ul>
+                </div>
             </li>
             <li class="nav-item">
-                <a mat-button class="nav-link" *ngIf="!isUserAuth" routerLink='/login' routerLinkeActive="mat-accent">
+                <a mat-button class="nav-link" *ngIf="!_isUserAuth" routerLink='/login' routerLinkeActive="mat-accent">
                     login
                 </a>
             </li>
-            <li class="nav-item">
-                <a mat-button *ngIf="!isUserAuth" class="nav-link" routerLink='/signUp' routerLinkeActive="mat-accent">
+            <li class="title-app">
+                <a mat-button *ngIf="!_isUserAuth" class="nav-link" routerLink='/signUp' routerLinkeActive="mat-accent">
                     signUp
                 </a>
             </li>
+            <li class="nav-item">
+                <a *ngIf="_isUserAuth" routerLink='/home'>
+                    MyApp
+                </a>
+            </li>
         </ul>
-        <button *ngIf="isUserAuth" class="nav-link" (click)="onLogOut()" mat-button>
+        <button *ngIf="_isUserAuth" class="nav-link" (click)="onLogOut()" mat-button>
             logOut
         </button>
     </div>

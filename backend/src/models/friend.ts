@@ -2,20 +2,21 @@ import { Document, model, Schema } from "mongoose";
 import { IUser } from "./user";
 
 export interface IFriend extends Document {
-   match: string[];
+   match:Schema.Types.ObjectId[];
    want: string[];
    creator: IUser;
 }
 
-export const FriendSechma = new Schema({
+const FriendSechma = new Schema({
    creator: {
       ref: "User",
       require: true,
       type: Schema.Types.ObjectId,
    },
-   match: { type: [String] },
+   match:[{ type: Schema.Types.ObjectId, ref: 'User' }],
    want: [String],
 
 });
 
-export default model<IFriend>("Friend", FriendSechma);
+ const Friend= model<IFriend>("Friend", FriendSechma);
+ export {Friend}

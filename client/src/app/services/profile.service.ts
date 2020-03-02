@@ -5,39 +5,30 @@ import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
 import { Router } from '@angular/router'
 import { environment } from '../../environments/environment'
-Injectable()
-export class profileService {
+import { MatSnackBar } from '@angular/material';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ProfileService {
   private port = environment.urlApi + "profile";
-  private profile: Profile
+  private profile: Profile=null;
   private profileSub = new Subject<Profile>();
   constructor(
     private http: HttpClient,
-    private router: Router
-    ) { }
+    private router: Router,
+    private snackbar: MatSnackBar
+  ) {}
   public getProfile() {
     return this.profileSub.asObservable();
   }
   public getProfileApi() {
-    return this.http.get<{ profile: Profile }>(this.port)
-      .pipe(map((res) => {
-        this.profile = {
-          firstName: res.profile.firstName,
-          lastName: res.profile.lastName,
-          range: res.profile.range,
-          summery: res.profile.summery,
-          maximum: res.profile.maximum,
-          minimum: res.profile.minimum,
-          age: res.profile.age,
-          city: res.profile.city,
-          phoneNumber: res.profile.phoneNumber,
-          imagePath: res.profile.imagePath,
-          creator: res.profile.creator,
-        }
-        this.profileSub.next({... this.profile});
-        return this.profile;
-      }));
+     this.http.get<{ profile: Profile }>(this.port).subscribe((res) => {
+       res.profile ? this.profile = res.profile : this.profile = null;
+        this.profileSub.next({ ... this.profile });
+      });
   }
-  public updataProfile(profile: Profile) {
+  public updataProfile(profile: any) {
     const Data = new FormData();
     Data.append('firstName', profile.firstName)
     Data.append('lastName', profile.lastName)
@@ -45,24 +36,28 @@ export class profileService {
     Data.append('range', profile.range)
     Data.append('maximum', profile.maximum)
     Data.append('minimum', profile.minimum)
+    Data.append('gender', profile.gender)
     Data.append('favorite', profile.favorite)
     Data.append('summery', profile.summery)
-    Data.append('imagePath', profile.imagePath)
-    Data.append('city', profile.city)
-    Data.append('id', this.profile.id)
+    Data.append('id', profile.id)
+    Data.append('image', profile.image)
+    Data.append('address', JSON.stringify(profile.address))
     Data.append('phoneNumber', profile.phoneNumber)
-    this.http.put(this.port, Data).subscribe((res: Profile) => {
-      this.profile = res;
-      this.profile.id = res["_id"]
-      this.profile.imagePath = res["imagePath"]
-      this.profileSub.next({ ... this.profile })
-      console.log("okup", res)
-    },
-      () => {
-        console.log("badup")
-      })
+    this.http.put<{ profile: Profile }>(this.port, Data)
+      .subscribe(() => {
+        this.snackbar.open(
+          'עדכון פרויפל עבר בהצלחה!',
+          'סגירה'
+        );
+      },
+        () => {
+          this.snackbar.open(
+            'אירעה שגיאה בעת עדכון',
+            'סגירה'
+          );
+        })
   }
-  public createProfile(profile: Profile) {
+  public createProfile(profile: any) {
     const Data = new FormData();
     Data.append('firstName', profile.firstName)
     Data.append('lastName', profile.lastName)
@@ -70,21 +65,27 @@ export class profileService {
     Data.append('range', profile.range)
     Data.append('maximum', profile.maximum)
     Data.append('minimum', profile.minimum)
+    Data.append('gender', profile.gender)
     Data.append('favorite', profile.favorite)
     Data.append('summery', profile.summery)
-    Data.append('imagePath', profile.imagePath)
-    Data.append('city', profile.city)
+    Data.append('image', profile.image)
+    Data.append('address', JSON.stringify(profile.address))
     Data.append('phoneNumber', profile.phoneNumber)
-    this.http.post(this.port, Data).subscribe((res: Profile) => {
-      this.profile = res;
-      this.profile.id = res["_id"]
-      this.profile.imagePath = res["imagePath"]
-      this.profileSub.next({ ... this.profile })
-      console.log("okcreate", res)
-    },
-      () => {
-        console.log("badcreate")
-      })
+    this.http.post(this.port, Data)
+      .subscribe((res: Profile) => {
+        this.profile = res;
+        this.profileSub.next({ ... this.profile })
+        this.snackbar.open(
+          ' יצירת פרופיל עברה בהצלחה!',
+          'סגירה'
+        );
+      },
+        () => {
+          this.snackbar.open(
+            'אירעה שגיאה בעת יצירת פרופיל',
+            'סגירה'
+          );
+        })
 
   }
 }
